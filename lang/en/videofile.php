@@ -53,6 +53,7 @@ $string['height_help'] = 'Enter the height of the video here (e.g. 500 for a hei
 $string['responsive'] = 'Responsive?';
 $string['responsive_help'] = "Check to make the video automatically resize with the browser window size.\n\nUse the width and height fields to define the video proportions (e.g. 16/9 or 800/450).";
 $string['responsive_label'] = '';
+$string['externalurl_label'] = 'MP4 Video URL';
 
 $string['videos'] = 'Videos';
 $string['videos_help'] = "Add the video file here.\n\nYou can add alternative formats in order to be sure it can play regardless of which browser is being used (usually .mp4, .ogv and .webm covers it.)";

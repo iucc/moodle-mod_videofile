@@ -53,6 +53,7 @@ $string['height_help'] = 'Skriv in höjden på videospelaren här (t.ex. 500 fö
 $string['responsive'] = 'Responsive?';
 $string['responsive_help'] = "Kryssa i för att storleken på videospelaren ska anpassas automatiskt efter webbläsarens fönsterstorlek.\n\nAnvänd fälten för bredd och höjd till att definiera proportionerna (t.ex. 16/9 eller 800/450).";
 $string['responsive_label'] = '';
+$string['externalurl_label'] = 'MP4 Video URL';
 
 $string['videos'] = 'Videos';
 $string['videos_help'] = "Lägg till videofilen här.\n\nDu kan lägga till alternativa format för att vara säker på att videon går att spela upp oavsett vilken webbläsare som används (vanligtvis räcker det med .mp4, .ogv and .webm).";

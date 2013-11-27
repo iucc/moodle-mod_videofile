@@ -97,6 +97,15 @@ class mod_videofile_mod_form extends moodleform_mod {
         $mform->addHelpButton('responsive', 'responsive', 'videofile');
         $mform->setDefault('responsive', $config->responsive);
 
+        // Video file url
+        $mform->addElement('url', 'externalurl', get_string('externalurl_label', 'videofile'), array('size'=>'60'), array('usefilepicker'=>true));
+        $mform->setType('externalurl', PARAM_URL);
+        $mform->addRule('externalurl',
+                        get_string('maximumchars', '', 255),
+                        'maxlength',
+                        255,
+                        'client');
+
         // Video file manager.
         $options = array('subdirs' => false,
                          'maxbytes' => 0,
@@ -108,8 +117,6 @@ class mod_videofile_mod_form extends moodleform_mod {
             get_string('videos', 'videofile'),
             null,
             $options);
-        $mform->addHelpButton('videos', 'videos', 'videofile');
-        $mform->addRule('videos', null, 'required', null, 'client');
 
         // Posters file manager.
         $options = array('subdirs' => false,

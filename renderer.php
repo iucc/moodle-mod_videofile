@@ -222,6 +222,27 @@ class mod_videofile_renderer extends plugin_renderer_base {
     }
 
     /**
+     * Utility function for creating the video source elements HTML.
+     *
+     * @param int $contextid
+     * @return string HTML
+     */
+    private function get_video_url_source_elements_html($videofile) {
+        $output = '';
+
+        $videourl = $videofile->get_instance()->externalurl;
+        $mimetype = "video/mp4";
+
+        $output .= html_writer::empty_tag(
+                    'source',
+                    array('src' => $videourl,
+                          'type' => $mimetype)
+                );
+
+        return $output;
+    }
+
+    /**
      * Utility function for creating the video caption track elements
      * HTML.
      *
@@ -302,11 +323,6 @@ class mod_videofile_renderer extends plugin_renderer_base {
             }
         }
 
-        $output = html_writer::tag('p',
-                                   get_string('video_not_playing',
-                                              'videofile',
-                                              $videooutput),
-                                   array());
         return html_writer::tag('div',
                                 $output,
                                 array('class' => 'videofile-not-playing-msg'));
@@ -332,7 +348,11 @@ class mod_videofile_renderer extends plugin_renderer_base {
         $output .= $this->get_video_element_html($videofile, $posterurl);
 
         // Elements for video sources.
-        $output .= $this->get_video_source_elements_html($contextid);
+        if ($videofile->get_instance()->externalurl != null) {
+            $output .= $this->get_video_url_source_elements_html($videofile);
+        } else {
+            $output .= $this->get_video_source_elements_html($contextid);
+        }
 
         // Elements for caption tracks.
         $output .= $this->get_video_caption_track_elements_html($contextid);
@@ -341,7 +361,7 @@ class mod_videofile_renderer extends plugin_renderer_base {
         $output .= html_writer::end_tag('video');
 
         // Alternative video links in case video isn't showing/playing properly.
-        $output .= $this->get_alternative_video_links_html($contextid);
+//        $output .= $this->get_alternative_video_links_html($contextid);
 
         // Close videofile div.
         $output .= $this->output->container_end();

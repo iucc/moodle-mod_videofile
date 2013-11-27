@@ -35,7 +35,8 @@ class backup_videofile_activity_structure_step extends backup_activity_structure
         $videofile = new backup_nested_element('videofile', array('id'), array(
             'name', 'intro', 'introformat',
             'width', 'height',
-            'timecreated', 'timemodified'));
+            'timecreated', 'timemodified',
+            'externalurl'));
 
         // Define sources.
         $videofile->set_source_table('videofile',

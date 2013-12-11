@@ -25,7 +25,8 @@
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 
-$id = required_param('id', PARAM_INT);
+$id       = required_param('id', PARAM_INT);
+$redirect = optional_param('redirect', 0, PARAM_BOOL);
 
 $cm = get_coursemodule_from_id('videofile', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -35,7 +36,11 @@ $videofile = new videofile($context, $cm, $course);
 require_login($course, true, $cm);
 require_capability('mod/videofile:view', $context);
 
-$PAGE->set_pagelayout('incourse');
+if ($redirect) {
+    $PAGE->set_pagelayout('popup');
+} else {
+    $PAGE->set_pagelayout('incourse');
+}
 
 $url = new moodle_url('/mod/videofile/view.php', array('id' => $id));
 $PAGE->set_url('/mod/videofile/view.php', array('id' => $cm->id));

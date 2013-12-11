@@ -75,7 +75,9 @@ class mod_videofile_renderer extends plugin_renderer_base {
         $this->page->set_heading($this->page->course->fullname);
 
         $output .= $this->output->header();
-        $output .= $this->output->heading($name, 3);
+        if ($this->page->pagelayout != "popup") {
+            $output .= $this->output->heading($name, 3);
+        }
 
         if (!empty($videofile->get_instance()->intro)) {
             $output .= $this->output->box_start('generalbox boxaligncenter', 'intro');

@@ -75,16 +75,16 @@ class mod_videofile_renderer extends plugin_renderer_base {
         $this->page->set_heading($this->page->course->fullname);
 
         $output .= $this->output->header();
-        if ($this->page->pagelayout != "popup") {
+        if ($this->page->pagelayout != "popup" && $this->page->pagelayout != "embedded") {
             $output .= $this->output->heading($name, 3);
-        }
+            if (!empty($videofile->get_instance()->intro)) {
+                $output .= $this->output->box_start('generalbox boxaligncenter', 'intro');
+                $output .= format_module_intro('videofile',
+                                               $videofile->get_instance(),
+                                               $coursemoduleid);
+                $output .= $this->output->box_end();
+            }
 
-        if (!empty($videofile->get_instance()->intro)) {
-            $output .= $this->output->box_start('generalbox boxaligncenter', 'intro');
-            $output .= format_module_intro('videofile',
-                                           $videofile->get_instance(),
-                                           $coursemoduleid);
-            $output .= $this->output->box_end();
         }
 
         return $output;

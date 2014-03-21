@@ -24,6 +24,7 @@
 
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once(dirname(__FILE__) . '/locallib.php');
+require_once($CFG->libdir . '/resourcelib.php');
 
 $id       = required_param('id', PARAM_INT);
 $redirect = optional_param('redirect', 0, PARAM_BOOL);
@@ -38,8 +39,15 @@ require_capability('mod/videofile:view', $context);
 
 if ($redirect) {
     $PAGE->set_pagelayout('popup');
-} else {
-    $PAGE->set_pagelayout('incourse');
+}
+
+switch ($videofile->get_instance()->display) {
+    case RESOURCELIB_DISPLAY_EMBED:
+        $PAGE->set_pagelayout('embedded');
+        break;
+    default:
+        $PAGE->set_pagelayout('incourse');
+        break;
 }
 
 $url = new moodle_url('/mod/videofile/view.php', array('id' => $id));

@@ -105,6 +105,7 @@ class videofile {
         $add->height = $formdata->height;
         $add->responsive = $formdata->responsive;
         $add->externalurl = $formdata->externalurl;
+        $add->display = $formdata->display;
 
         $returnid = $DB->insert_record('videofile', $add);
         $this->instance = $DB->get_record('videofile',
@@ -164,6 +165,7 @@ class videofile {
         $update->height = $formdata->height;
         $update->responsive = $formdata->responsive;
         $update->externalurl = $formdata->externalurl;
+        $update->display = $formdata->display;
 
         $result = $DB->update_record('videofile', $update);
         $this->instance = $DB->get_record('videofile',
@@ -342,6 +344,37 @@ class videofile {
         $this->output = $PAGE->get_renderer('mod_videofile');
         return $this->output;
     }
+
+   /**
+    * Returns list of available display options
+    * @param array $enabled list of options enabled in module configuration
+    * @param int $current current display options for existing instances
+    * @return array of key=>name pairs
+    */
+   public function videofile_get_displayoptions(array $enabled, $current=null) {
+       if (is_number($current)) {
+           $enabled[] = $current;
+       }
+
+       $options = array(RESOURCELIB_DISPLAY_EMBED    => get_string('resourcedisplayembed'),
+                        RESOURCELIB_DISPLAY_OPEN     => get_string('resourcedisplayopen'),
+                        RESOURCELIB_DISPLAY_POPUP    => get_string('resourcedisplaypopup'));
+
+       $result = array();
+
+       foreach ($options as $key=>$value) {
+           if (in_array($key, $enabled)) {
+               $result[$key] = $value;
+           }
+       }
+
+       if (empty($result)) {
+           // there should be always something in case admin misconfigures module
+           $result[RESOURCELIB_DISPLAY_OPEN] = $options[RESOURCELIB_DISPLAY_OPEN];
+       }
+
+       return $result;
+   }
 
     /**
      * Save draft files.

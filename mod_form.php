@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot . '/course/moodleform_mod.php');
 require_once(dirname(__FILE__) . '/locallib.php');
+require_once("$CFG->libdir/resourcelib.php");
 require_once($CFG->libdir . '/filelib.php');
 
 class mod_videofile_mod_form extends moodleform_mod {
@@ -143,6 +144,26 @@ class mod_videofile_mod_form extends moodleform_mod {
             null,
             $options);
         $mform->addHelpButton('captions', 'captions', 'videofile');
+
+        //-------------------------------------------------------
+        $mform->addElement('header', 'optionssection', get_string('appearance'));
+
+        if ($this->current->instance) {
+            $options = resourcelib_get_displayoptions(explode(',', $config->displayoptions), $this->current->display);
+        } else {
+            $options = resourcelib_get_displayoptions(explode(',', $config->displayoptions));
+        }
+
+        if (count($options) == 1) {
+            $mform->addElement('hidden', 'display');
+            $mform->setType('display', PARAM_INT);
+            reset($options);
+            $mform->setDefault('display', key($options));
+        } else {
+            $mform->addElement('select', 'display', get_string('displayselect', 'resource'), $options);
+            $mform->setDefault('display', $config->display);
+            $mform->addHelpButton('display', 'displayselect', 'resource');
+        }
 
         // Standard elements, common to all modules.
         $this->standard_coursemodule_elements();

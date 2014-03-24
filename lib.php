@@ -216,7 +216,7 @@ function videofile_get_coursemodule_info($coursemodule) {
     global $DB;
 
     $dbparams = array('id' => $coursemodule->instance);
-    $fields = 'id, name, intro, introformat';
+    $fields = 'id, name, intro, introformat, width, height, display';
 
     if (!$videofile = $DB->get_record('videofile', $dbparams, $fields)) {
         return false;
@@ -232,6 +232,11 @@ function videofile_get_coursemodule_info($coursemodule) {
                                                $coursemodule->id,
                                                false);
     }
+
+    /* Store video dimensions to calculate videofile-container size when embedded. */
+    $result->customdata = array('width'=>$videofile->width,
+                                'height'=>$videofile->height,
+                                'display'=>$videofile->display);
 
     return $result;
 }

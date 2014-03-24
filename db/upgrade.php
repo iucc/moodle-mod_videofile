@@ -124,6 +124,29 @@ function xmldb_videofile_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2013112700, 'videofile');
     }
 
+    // Added externalurl text field.
+    if ($oldversion < 2014032100) {
+        $table = new xmldb_table('videofile');
+        $displayfield = new xmldb_field('display',
+                                           XMLDB_TYPE_INTEGER,
+                                           4,
+                                           XMLDB_UNSIGNED,
+                                           XMLDB_NOTNULL,
+                                           null,
+                                           '0',
+                                           'externalurl');
+
+        // Add field if it doesn't already exist.
+        if (!$dbman->field_exists($table, $displayfield)) {
+            $dbman->add_field($table, $displayfield);
+        }
+
+        /* Once we reach this point, we can store the new version and
+           consider the module upgraded to the version 2014032100 so the
+           next time this block is skipped. */
+        upgrade_mod_savepoint(true, 2014032100, 'videofile');
+    }
+
     // Final return of upgrade result (true, all went good) to Moodle.
     return true;
 }

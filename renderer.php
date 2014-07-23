@@ -51,23 +51,26 @@ class mod_videofile_renderer extends plugin_renderer_base {
         $context = context_module::instance($coursemoduleid);
 
         // Add videojs css and js files.
-        $this->page->requires->css('/mod/videofile/video-js-4.2.2x/video-js.min.css');
-        $this->page->requires->js('/mod/videofile/video-js-4.2.2x/video.js', true);
+        $this->page->requires->css('/mod/videofile/video-js-4.6.3/video-js.min.css');
+        $this->page->requires->js('/mod/videofile/video-js-4.6.3/video.js', true);
 
         // Set the videojs flash fallback url.
-        $swfurl = new moodle_url('/mod/videofile/video-js-4.2.2x/video-js.swf');
+        $swfurl = new moodle_url('/mod/videofile/video-js-4.6.3/video-js.swf');
         $this->page->requires->js_init_code(
             'videojs.options.flash.swf = "' . $swfurl . '";');
 
         // Yui module handles responsive mode video resizing.
         if ($videofile->get_instance()->responsive) {
+            $config = get_config('videofile');
+
             $this->page->requires->yui_module(
                 'moodle-mod_videofile-videojs',
                 'M.mod_videofile.videojs.init',
                 array($videofile->get_instance()->id,
                       $swfurl,
                       $videofile->get_instance()->width,
-                      $videofile->get_instance()->height));
+                      $videofile->get_instance()->height,
+                      (boolean) $config->limitdimensions));
         }
 
         // Header setup.

@@ -17,3 +17,14 @@
 
 /* Workaround for videojs "Sorry, no compatible source and playback technology..." message not showing properly. */
 .videofile .video-js p { color: #000; background-color: #f00; position: absolute; z-index: 100; width: 100%; text-align: center }
+
+.videotranscript {
+    width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.dir-rtl .transcript-text {
+    display: block;
+    margin-right: 50px;
+}

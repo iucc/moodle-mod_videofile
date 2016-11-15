@@ -76,6 +76,20 @@ if ($ADMIN->fulltree) {
                                          get_string('responsive_explain', 'videofile'),
                                          0));
 
+    // Default mpeg-dash flag.
+    $settings->add(
+        new admin_setting_configcheckbox('videofile/mpegdash',
+            get_string('mpegdash', 'videofile'),
+            get_string('mpegdash_explain', 'videofile'),
+            0));
+
+    // Default transcript flag.
+    $settings->add(
+        new admin_setting_configcheckbox('videofile/transcript',
+            get_string('transcript', 'videofile'),
+            get_string('transcript_explain', 'videofile'),
+            0));
+
     // Default use width/height as max-width/height when in responsive mode flag.
     $settings->add(
         new admin_setting_configcheckbox('videofile/limitdimensions',
